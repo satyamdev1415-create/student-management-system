@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Delete Teacher{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+
+        <div class="card border-0 shadow-sm">
+
+            <!-- Header -->
+            <div class="card-header bg-danger text-white text-center py-4">
+                <div class="fs-1 mb-2">⚠️</div>
+                <h3 class="mb-1 fw-bold">Delete Teacher</h3>
+                <p class="mb-0">
+                    This action cannot be undone.
+                </p>
+            </div>
+
+            <!-- Body -->
+            <div class="card-body p-4 p-md-5 text-center">
+
+                <p class="fs-5 mb-3">
+                    Are you sure you want to delete
+                    <strong>{{ teacher.name }}</strong>?
+                </p>
+
+                <div class="alert alert-warning text-start">
+                    <strong>Warning:</strong>
+                    Once this teacher is deleted, their information
+                    will be permanently removed from the system.
+                </div>
+
+                <!-- Actions -->
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    <div class="d-flex justify-content-center gap-2 mt-4">
+
+                        <a href="{% url 'teacher_list' %}"
+                            class="btn btn-outline-secondary px-4">
+                            ← Cancel
+                        </a>
+
+                        <button type="submit"
+                                class="btn btn-danger px-4">
+                            🗑️ Yes, Delete
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <!-- Back link -->
+        <div class="text-center mt-3">
+            <a href="{% url 'teacher_list' %}"
+                class="text-decoration-none text-muted">
+                ← Back to Teachers
+            </a>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

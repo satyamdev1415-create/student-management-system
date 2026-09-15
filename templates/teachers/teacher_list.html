@@ -1,0 +1,466 @@
+{% extends "base.html" %}
+
+{% block title %}
+Teachers
+{% endblock %}
+
+
+{% block content %}
+
+<!-- PAGE HEADER -->
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h2 class="fw-bold mb-1">
+            👨‍🏫 Teachers
+        </h2>
+
+        <p class="text-muted mb-0">
+            Manage all teachers in the system
+        </p>
+
+    </div>
+
+
+    <a
+        href="{% url 'teacher_create' %}"
+        class="btn btn-dark"
+    >
+        + Add Teacher
+    </a>
+
+</div>
+
+
+<!-- SEARCH -->
+
+<!-- SEARCH + SUBJECT FILTER -->
+
+<div class="card border-0 shadow-sm mb-4">
+
+    <div class="card-body">
+
+        <form method="GET">
+
+            <div class="row g-2">
+
+                <!-- SEARCH -->
+
+                <div class="col-md-6">
+
+                    <div class="input-group">
+
+                        <span class="input-group-text">
+                            🔍
+                        </span>
+
+                        <input
+                            type="text"
+                            name="q"
+                            value="{{ search }}"
+                            class="form-control"
+                            placeholder="Search teacher by name..."
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- SUBJECT FILTER -->
+
+                <div class="col-md-4">
+
+                    <select
+                        name="subject"
+                        class="form-select"
+                    >
+
+                        <option value="">
+                            All Subjects
+                        </option>
+
+
+                        {% for item in subjects %}
+
+                        <option
+                            value="{{ item }}"
+                            {% if selected_subject == item %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ item }}
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <!-- BUTTON -->
+
+                <div class="col-md-2">
+
+                    <button
+                        type="submit"
+                        class="btn btn-dark w-100"
+                    >
+                        Search
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- SEARCH RESULT MESSAGE -->
+
+{% if search %}
+
+<div class="alert alert-light border mb-3">
+
+    Showing results for:
+    <strong>"{{ search }}"</strong>
+
+    <a
+        href="{% url 'teacher_list' %}"
+        class="float-end text-decoration-none"
+    >
+        Clear Search
+    </a>
+
+</div>
+
+{% endif %}
+
+
+<!-- TEACHER TABLE -->
+
+<div class="card border-0 shadow-sm">
+
+    <div class="card-body p-0">
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle mb-0">
+
+                <thead class="table-dark">
+
+                    <tr>
+
+                        <th class="px-4">
+                            ID
+                        </th>
+
+                        <th>
+                            Teacher
+                        </th>
+
+                        <th>
+                            Email
+                        </th>
+
+                        <th>
+                            Phone
+                        </th>
+
+                        <th>
+                            Subject
+                        </th>
+
+                        <th class="text-center">
+                            Actions
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for teacher in teachers %}
+
+                    <tr>
+
+                        <!-- ID -->
+
+                        <td class="px-4 fw-semibold">
+                            #{{ teacher.id }}
+                        </td>
+
+
+                        <!-- NAME -->
+
+                        <td>
+
+                            <div class="d-flex align-items-center">
+
+                                <div
+                                    class="bg-dark text-white rounded-circle d-flex align-items-center justify-content-center me-2"
+                                    style="width: 38px; height: 38px;"
+                                >
+                                    {{ teacher.name|first|upper }}
+                                </div>
+
+                                <span class="fw-semibold">
+                                    {{ teacher.name }}
+                                </span>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- EMAIL -->
+
+                        <td>
+                            {{ teacher.email }}
+                        </td>
+
+
+                        <!-- PHONE -->
+
+                        <td>
+                            {{ teacher.phone }}
+                        </td>
+
+
+                        <!-- SUBJECT -->
+
+                        <td>
+
+                            <span class="badge text-bg-secondary">
+                                {{ teacher.subject }}
+                            </span>
+
+                        </td>
+
+
+                        <!-- ACTIONS -->
+
+                        <td class="text-center">
+
+                            <a
+                                href="{% url 'teacher_update' teacher.id %}"
+                                class="btn btn-sm btn-outline-warning me-1"
+                            >
+                                ✏️ Edit
+                            </a>
+
+
+                            <a
+                                href="{% url 'teacher_delete' teacher.id %}"
+                                class="btn btn-sm btn-outline-danger"
+                            >
+                                🗑 Delete
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+
+                    {% empty %}
+
+                    <!-- EMPTY / NO SEARCH RESULT -->
+
+                    <tr>
+
+                        <td
+                            colspan="6"
+                            class="text-center py-5"
+                        >
+
+                            <div class="text-muted">
+
+                                <div style="font-size: 40px;">
+
+                                    {% if search %}
+                                        🔍
+                                    {% else %}
+                                        👨‍🏫
+                                    {% endif %}
+
+                                </div>
+
+
+                                <h5 class="mt-2">
+
+                                    {% if search %}
+                                        No teachers found
+                                    {% else %}
+                                        No Teachers Found
+                                    {% endif %}
+
+                                </h5>
+
+
+                                <p class="mb-3">
+
+                                    {% if search %}
+
+                                        No teacher matches
+                                        "<strong>{{ search }}</strong>".
+
+                                    {% else %}
+
+                                        There are currently no teachers
+                                        in the system.
+
+                                    {% endif %}
+
+                                </p>
+
+
+                                {% if search %}
+
+                                    <a
+                                        href="{% url 'teacher_list' %}"
+                                        class="btn btn-outline-secondary"
+                                    >
+                                        Clear Search
+                                    </a>
+
+                                {% else %}
+
+                                    <a
+                                        href="{% url 'teacher_create' %}"
+                                        class="btn btn-dark"
+                                    >
+                                        + Add First Teacher
+                                    </a>
+
+                                {% endif %}
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- PAGINATION -->
+
+{% if teachers.has_other_pages %}
+
+<div class="d-flex justify-content-center mt-4">
+
+    <nav>
+
+        <ul class="pagination">
+
+            <!-- PREVIOUS -->
+
+            {% if teachers.has_previous %}
+
+            <li class="page-item">
+
+                <a
+                    class="page-link"
+                    href="?page={{ teachers.previous_page_number }}{% if search %}&q={{ search }}{% endif %}"
+                >
+                    ← Previous
+                </a>
+
+            </li>
+
+            {% else %}
+
+            <li class="page-item disabled">
+
+                <span class="page-link">
+                    ← Previous
+                </span>
+
+            </li>
+
+            {% endif %}
+
+
+            <!-- CURRENT PAGE -->
+
+            <li class="page-item active">
+
+                <span class="page-link">
+
+                    Page {{ teachers.number }}
+                    of {{ teachers.paginator.num_pages }}
+
+                </span>
+
+            </li>
+
+
+            <!-- NEXT -->
+
+            {% if teachers.has_next %}
+
+            <li class="page-item">
+
+                <a
+                    class="page-link"
+                    href="?page={{ teachers.next_page_number }}{% if search %}&q={{ search }}{% endif %}"
+                >
+                    Next →
+                </a>
+
+            </li>
+
+            {% else %}
+
+            <li class="page-item disabled">
+
+                <span class="page-link">
+                    Next →
+                </span>
+
+            </li>
+
+            {% endif %}
+
+        </ul>
+
+    </nav>
+
+</div>
+
+{% endif %}
+
+
+<!-- BACK TO DASHBOARD -->
+
+<div class="mt-4">
+
+    <a
+        href="{% url 'dashboard' %}"
+        class="btn btn-outline-secondary"
+    >
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+
+{% endblock %}

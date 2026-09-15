@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}
+Delete Student
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-md-7 col-lg-6">
+
+        <div class="card border-0 shadow-sm">
+
+            <div class="card-body text-center p-5">
+
+                <!-- WARNING ICON -->
+
+                <div
+                    class="bg-danger-subtle text-danger rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4"
+                    style="width: 75px; height: 75px; font-size: 32px;"
+                >
+                    ⚠️
+                </div>
+
+
+                <!-- TITLE -->
+
+                <h3 class="fw-bold mb-2">
+                    Delete Student?
+                </h3>
+
+
+                <p class="text-muted mb-4">
+
+                    Are you sure you want to delete
+
+                    <strong class="text-dark">
+                        {{ student.name }}
+                    </strong>
+
+                    ?
+
+                    <br>
+
+                    <small>
+                        This action cannot be undone.
+                    </small>
+
+                </p>
+
+
+                <!-- STUDENT INFO -->
+
+                <div class="bg-light rounded p-3 mb-4">
+
+                    <div class="fw-semibold">
+                        {{ student.name }}
+                    </div>
+
+                    <div class="text-muted small">
+                        Roll Number: {{ student.roll_number }}
+                    </div>
+
+                    <div class="text-muted small">
+                        Course: {{ student.course.name }}
+                    </div>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    <div class="d-flex justify-content-center gap-2">
+
+                        <a
+                            href="{% url 'student_list' %}"
+                            class="btn btn-outline-secondary px-4"
+                        >
+                            Cancel
+                        </a>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-danger px-4"
+                        >
+                            🗑 Yes, Delete
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
