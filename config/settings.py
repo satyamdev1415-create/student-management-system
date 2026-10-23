@@ -44,12 +44,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'jazzmin',
 
     "students",
     "teachers",
     "courses",
     "dashboard",
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -60,6 +62,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
 
 ROOT_URLCONF = 'config.urls'
 
@@ -78,7 +82,11 @@ TEMPLATES = [
     },
 ]
 
+
+
 WSGI_APPLICATION = 'config.wsgi.application'
+
+
 
 
 # Database
@@ -95,8 +103,12 @@ DATABASES = {
     }
 }
 
+
+
 # Password validation
 # https://docs.djangoproject.com/en/6.1/ref/settings/#auth-password-validators
+
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -114,6 +126,10 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/6.1/topics/i18n/
 
@@ -124,6 +140,8 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+
 
 
 # Static files (CSS, JavaScript, Images)
